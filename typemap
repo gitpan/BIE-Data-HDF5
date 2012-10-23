@@ -1,0 +1,8 @@
+TYPEMAP
+BIE_Data_HDF5_Path *    T_PTROBJ
+hid_t   T_IV
+herr_t  T_IV  
+
+TYPEMAP
+BIE_Data_HDF5_Data *    T_PTROBJ    
+  
