@@ -1,8 +1,8 @@
 package BIE::Data::HDF5;
 
-use 5.014002;
 use strict;
 use warnings;
+use v5.10;
 
 require Exporter;
 
@@ -15,30 +15,48 @@ our @ISA = qw(Exporter);
 # This allows declaration	use BIE::Data::HDF5 ':all';
 # If you do not need this, moving things directly into @EXPORT or @EXPORT_OK
 # will save memory.
-our %EXPORT_TAGS = ( 'all' => [ qw(
-	
-) ] );
+our %EXPORT_TAGS = ( 
+		    'file' => [ qw(
+				    H5Fcreate
+				    H5Fopen
+				    H5Fclose
+				 ) ],
+		    'group' => [ qw(
+				     H5Gcreate
+				     H5Gopen
+				     H5Gclose
+				  ) ],
+		    'data' => [ qw(
+				    H5Dcreate
+				    H5Dopen
+				    H5Dclose
+				    H5Dget_type
+				    H5Dget_space
+				    H5Dread
+				    H5Tget_size
+				    H5Tclose
+				    H5Sclose
+				    getH5DCode			    
+				 ) ],
+		    'utils' => [ qw(
+				     h5name
+				     h5ls
+				  )],
+		   );
+
+$EXPORT_TAGS{all} = [map { @{$EXPORT_TAGS{$_}} } qw(file group data utils)];
 
 our @EXPORT_OK = ( @{ $EXPORT_TAGS{'all'} } );
 
-our @EXPORT = qw(
-	H5Fopen
-	H5Fclose
-	H5Dopen
-	H5Dread
-	H5Dprint
-);
+our @EXPORT = qw();
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 require XSLoader;
 XSLoader::load('BIE::Data::HDF5', $VERSION);
 
-# Preloaded methods go here.
-
 1;
 __END__
-# Below is stub documentation for your module. You'd better edit it!
 
 =head1 NAME
 
@@ -46,7 +64,7 @@ BIE::Data::HDF5 - Perl extension for blah with HDF5.
 
 =head1 SYNOPSIS
 
-  use BIE::Data::HDF5;
+use BIE::Data::HDF5;
   
 =head1 DESCRIPTION
 
@@ -56,10 +74,13 @@ Now it only reads h5 files. Writing capability is coming soon.
 =head2 EXPORT
 
 None by default.
+For developers, please check out the library file.
 
 =head1 SEE ALSO
 
-L<HDF5 website|http://www.hdfgroup.org>
+See L<HDF5 website|http://www.hdfgroup.org> to learn more about HDF5.
+
+See L<PDL::IO::HDF5> if user would like to rely on PDL more.
 
 =head1 AUTHOR
 
@@ -67,10 +88,10 @@ Xin Zheng, E<lt>zhengxin@mail.nih.govE<gt>
 
 This work is being inspired by problems in daily work at 
 Laboratory of Bioinformatics and Immunopathogenesis at Frederick National 
-Lab for Cancer Research. Many thanks for our team. Be proud of 
-our excellent work in HIV/AIDS study. And of course, FNL doesn't take any 
-responsiblity caused by using this module, the only one to be blamed is 
-listed above.
+Lab for Cancer Research. 
+Many thanks for our team. Be proud of our excellent work in HIV/AIDS study. 
+And of course, FNL doesn't take any responsiblity caused by using this module.
+The only one to be blamed is listed above.
 
 =head1 COPYRIGHT AND LICENSE
 
